@@ -14,9 +14,8 @@
 
 <body>
 
-
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white fixed-top shadow-sm <?= isset($dnone) ? 'd-none' : '' ?>">
+    <nav class="navbar navbar-expand-lg bg-white fixed-top shadow-sm @isset($dnone) d-none @endisset">
         <div class="container-fluid container-lg">
 
             <!-- Brand Logo -->
@@ -46,7 +45,7 @@
                     <li class="nav-item mx-2">
                         <a class="nav-link text-dark" href="/posts?page=1">Posts</a>
                     </li>
-                    <?php if (isset($user)): ?>
+                    @if(auth()->user())
                     <li class="nav-item dropdown mx-2">
                         <a class="nav-link dropdown-toggle d-flex align-items-center text-dark" href="#"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -65,7 +64,7 @@
                                     </div>
                                 </form>
                             </li>
-                            <?php if (check('dashboard')): ?>
+                            {{-- @if(check('dashboard'))
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -74,24 +73,19 @@
                                     <i class="fas fa-cog me-2"></i>Admin Dashboard
                                 </a>
                             </li>
-                            <?php endif ?>
+                            @endif --}}
                         </ul>
                     </li>
-                    <?php else : ?>
+                    @else
                     <li class="nav-item mx-2">
                         <a class="nav-link text-dark" href="/login">
                             <i class="fas fa-sign-in-alt me-1"></i>Login
                         </a>
                     </li>
-                    <?php endif ?>
+                    @endif
                     <li class="nav-item mx-2">
                         <a class="nav-link text-dark" href="/#contact">Contact</a>
                     </li>
-                    <!-- <li class="nav-item mx-2">
-                        <a href="#" class="nav-link text-dark">
-                            <i class="fas fa-moon"></i>
-                        </a>
-                    </li> -->
                     <li class="nav-item mx-2">
                         <a href="#" class="nav-link text-dark">
                             <i class="fab fa-github"></i>
@@ -102,7 +96,7 @@
 
             <!-- Mobile Menu Button -->
             <div class="d-flex align-items-center d-lg-none">
-                <?php if (isset($user)): ?>
+                @if(auth()->user())
                 <div class="dropdown me-3">
                     <a class="nav-link dropdown-toggle d-flex align-items-center text-dark" href="#"
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -119,7 +113,7 @@
                                 </form>
                             </a>
                         </li>
-                        <?php if (check('dashboard')): ?>
+                        {{-- @if(check('dashboard'))
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -128,10 +122,10 @@
                                 <i class="fas fa-cog me-2"></i>Admin
                             </a>
                         </li>
-                        <?php endif ?>
+                        @endif --}}
                     </ul>
                 </div>
-                <?php endif ?>
+                @endif
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#electroNav">
                     <i class="fas fa-bars fa-lg"></i>
@@ -161,13 +155,13 @@
                         <i class="fas fa-newspaper me-3"></i>Posts
                     </a>
                 </li>
-                <?php if (!isset($user)): ?>
+                @if(auth()->user())
                 <li class="nav-item mb-2">
                     <a class="nav-link text-dark d-flex align-items-center" href="/login">
                         <i class="fas fa-sign-in-alt me-3"></i>Login
                     </a>
                 </li>
-                <?php endif ?>
+                @endif
                 <li class="nav-item mb-2">
                     <a class="nav-link text-dark d-flex align-items-center" href="/#contact">
                         <i class="fas fa-phone me-3"></i>Contact
@@ -201,7 +195,7 @@
     </main>
 
 
-    <footer class="footer bg-light py-4 <?= isset($dnone) ? 'd-none' : '' ?>">
+    <footer class="footer bg-light py-4 @isset($dnone) d-none @endisset">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4 mb-md-0">

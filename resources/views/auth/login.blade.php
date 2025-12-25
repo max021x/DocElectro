@@ -1,7 +1,8 @@
 @extends('layouts.main')
 @section('content')
-<?php if(isset($error)): ?>
-<div class="container">
+
+{{-- error alert --}}
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-6">
             <div class="alert mt-1 alert-warning alert-dismissible fade show" role="alert">
@@ -13,8 +14,7 @@
             </div>
         </div>
     </div>
-</div>
-<?php endif; ?>
+</div> --}}
 
 <div class="d-flex justify-content-center mt-6 position-relative">
     <img src="images/svg/decoration-star.svg" alt=""
@@ -22,6 +22,7 @@
     <div class="card py-5 px-3 w-100" style="max-width: 500px;">
         <div class="card-body">
             <form action="/login" method="POST">
+                @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
                     <input type="email" class="form-control" name="email" id="email"
