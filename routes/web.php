@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Router;
 
@@ -11,6 +12,10 @@ Route::view('/' , 'home.index')->name('home') ;
 Route::get('/login' , [AuthController::class , 'index'])->name('login') ; 
 Route::post('/login' , [AuthController::class , 'authenticate'])->name('login') ; 
 Route::post('/logout' , [AuthController::class , 'logout'])->name('logout')  ;
+
+
+Route::get('/posts' , [PostController::class]  , 'index')->name('posts.index') ; 
+
 
 
 
