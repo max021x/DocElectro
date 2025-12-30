@@ -135,7 +135,7 @@
                                     Dashboard
                                 </a>
                             </li>
-                            @can('access-admin-dashboard')
+                            @if(auth()->user()->role === 'admin')
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -144,7 +144,7 @@
                                         <i class="fas fa-cog me-2"></i>Admin
                                     </a>
                                 </li>
-                            @endcan
+                            @endif
                         </ul>
                     </div>
                 @endauth
