@@ -65,21 +65,22 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                {{-- <li>
+                                <li>
                                     <a class="dropdown-item d-flex align-items-center" href="{{ route('dashboard') }}">
                                         <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                                     </a>
-                                </li> --}}
-                                @can('access-admin-dashboard')
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.dashboard') }}">
-                                            <i class="fas fa-cog me-2"></i>Admin Dashboard
-                                        </a>
-                                    </li>
-                                @endcan
+                                </li>
+                                @if (auth()->user()->role === 'admin')
+                                    
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.dashboard') }}">
+                                        <i class="fas fa-cog me-2"></i>Admin Dashboard
+                                    </a>
+                                </li>
+                                @endif
                             </ul>
                         </li>
                     @else
