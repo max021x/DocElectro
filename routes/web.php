@@ -22,7 +22,7 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::get('/posts', [PostController::class , 'index'])->name('posts.index');
-Route::get('/posts/{id}/show', [PostController::class , 'index'])->name('posts.show');
+Route::get('/posts/{post}/show', [PostController::class , 'show'])->name('posts.show');
 
 Route::middleware(['auth'])->group(function  () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');

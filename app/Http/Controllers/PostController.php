@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -22,5 +23,11 @@ class PostController extends Controller
 
         $posts = $query->paginate(6) ;
         return view('posts.index' , compact('posts')) ;  
+    }
+
+    public function show (Post $post) 
+    {       
+        $comments = Comment::find($post) ; 
+        return view('posts.show' , compact('post' , 'comments')) ; 
     }
 }
