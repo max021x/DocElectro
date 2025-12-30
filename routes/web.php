@@ -3,11 +3,12 @@
 use App\Http\Middleware\AdminDashboard;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserDashboardController;
 
@@ -26,6 +27,7 @@ Route::get('/posts/{post}/show', [PostController::class , 'show'])->name('posts.
 
 Route::middleware(['auth'])->group(function  () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/comment/{post}/store' , [CommentController::class , 'store'])->name('comments.store') ; 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 }) ; 
 
