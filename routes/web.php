@@ -47,6 +47,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
-    Route::get('/users/{user}/edit', [UserController::class, 'create'])->name('admin.users.edit');
-    Route::get('/users/{user}/destroy', [UserController::class, 'create'])->name('admin.users.destroy');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::get('/users/{user}/destroy', [UserController::class, 'destroy'])->name('admin.users.destroy');
 });

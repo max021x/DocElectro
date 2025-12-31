@@ -10,7 +10,18 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(12);
+        $query = User::query();
+
+        if (request()->has('search')) {
+            $query->where('name', 'like', '%' . request('search') . '%')
+                ->orWhere('email', 'like', '%' . request('search') . '%');
+        }
+
+        if (request()->has('role')) {
+            $query->where('role', '=' ,request('role'));
+        }
+
+        $users = $query->paginate(12);
         return view('admin.user.index', compact('users'));
     }
 }
