@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Symfony\Component\Routing\Route;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -37,7 +38,7 @@ class PostController extends Controller
         $fides  = $request->validate([
             'title' => ['required', 'string', 'max:200'],
             'category' => ['required', 'string',  'max:100'],
-            'content' => ['required' , 'string'] , 
+            'content' => ['required', 'string'],
             'image' => ['required', 'nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ], [
             'image.image' => 'The file must be an image.',
@@ -45,16 +46,15 @@ class PostController extends Controller
             'image.max' => 'The image must not exceed 2MB in size.',
         ]);
 
-        if($request->hasFile('image')) {
-            $path = $request->file('image')->store('upload/posts' , 'public') ;
-            $fides['image'] = basename($path) ; 
-        }
-        else {
-            $fides['image'] = null ; 
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('upload/posts', 'public');
+            $fides['image'] = basename($path);
+        } else {
+            $fides['image'] = null;
         }
 
-        Post::create([...$fides , 'user_id' => $request->user()->id]) ; 
-        
+        Post::create([...$fides, 'user_id' => $request->user()->id]);
+
         return redirect()->route('admin.posts.index')->with('success', 'Post is stored in database :)');
     }
 
@@ -65,11 +65,19 @@ class PostController extends Controller
 
     public function update(Request $request) {}
 
-    public function destroy(Request $request, Post $post)
+    public function destroy(Post $post)
     {
+
+        $post = Post::find($post->id);
+
         if (!$post) {
             return redirect()->back()->with('error', 'Post not Found :(');
         }
+
+        if ($post->image && Storage::disk('public')->exists('upload/posts/' . $post->image)) {
+            Storage::disk('public')->delete('upload/posts/' . $post->image);
+        }
+
         $post->delete();
         return redirect()->back()->with('success', 'Post is Deleted :)');
     }

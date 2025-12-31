@@ -29,7 +29,7 @@
         @if($post->image)
         <div class="mb-4">
             <div class="text-center">
-                <img src="{{ asset('storage/uploads/posts/' . $post->image) }}" 
+                <img src="{{ asset('storage/upload/posts/' . $post->image) }}" 
                      alt="{{ $post->title }}" 
                      class="img-fluid rounded shadow-sm" 
                      style="max-height: 300px;">
