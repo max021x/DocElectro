@@ -45,8 +45,16 @@ class PostController extends Controller
             'image.max' => 'The image must not exceed 2MB in size.',
         ]);
 
-        Post::create([...$fides , 'user_id' => $request->user()->id]);
+        if($request->hasFile('image')) {
+            $path = $request->file('image')->store('upload/posts' , 'public') ;
+            $fides['image'] = basename($path) ; 
+        }
+        else {
+            $fides['image'] = null ; 
+        }
 
+        Post::create([...$fides , 'user_id' => $request->user()->id]) ; 
+        
         return redirect()->route('admin.posts.index')->with('success', 'Post is stored in database :)');
     }
 

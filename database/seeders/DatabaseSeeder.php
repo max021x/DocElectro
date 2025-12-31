@@ -31,6 +31,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make("user123")
         ]);
 
-        Post::factory()->count(40)->create() ; 
+        // Post::factory()->count(40)->create() ; 
     }
 }

@@ -56,7 +56,7 @@
                     <!-- Featured Image -->
                     @if ($post->image)
                         <div class="p-4 p-md-5">
-                            <img src="{{ asset('storage/uploads/posts/' . $post->image) }}" alt="{{ $post->title }}"
+                            <img src="{{ asset('storage/upload/posts/' . $post->image) }}" alt="{{ $post->title }}"
                                 class="img-fluid rounded w-100 shadow" style="max-height: 500px; object-fit: cover;">
                         </div>
                     @endif

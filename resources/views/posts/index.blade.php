@@ -58,7 +58,7 @@
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div class="card h-100">
                             <img class="card-img-top w-100 img-fluid"
-                                src="{{ asset('storage/uploads/posts/' . ($post->image ?? 'default.jpg')) }}"
+                                src="{{ asset('storage/upload/posts/' . ($post->image ?? 'default.jpg')) }}"
                                 alt="">
                             <div class="card-body">
                                 <div class="mb-2">
