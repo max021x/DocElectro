@@ -35,12 +35,19 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $fides  = $request->validate([
-            ''
+            'title' => ['required', 'string', 'max:200'],
+            'category' => ['required', 'string',  'max:100'],
+            'content' => ['required' , 'string'] , 
+            'image' => ['required', 'nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
+        ], [
+            'image.image' => 'The file must be an image.',
+            'image.mimes' => 'Only JPG, JPEG, and PNG images are allowed.',
+            'image.max' => 'The image must not exceed 2MB in size.',
         ]);
 
-        Post::created($fides);
+        Post::create([...$fides , 'user_id' => $request->user()->id]);
 
-        return redirect()->route()->with('success', 'Post is stored in database :)');
+        return redirect()->route('admin.posts.index')->with('success', 'Post is stored in database :)');
     }
 
     public function edit(Post $post)
