@@ -63,7 +63,40 @@ class PostController extends Controller
         return view('admin.posts.edit', compact('post'));
     }
 
-    public function update(Request $request) {}
+    public function update(Request $request, Post $post)
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:200'],
+            'category' => ['required', 'string', 'max:100'],
+            'content' => ['required', 'string'],
+            'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
+        ], [
+            'image.image' => 'The file must be an image.',
+            'image.mimes' => 'Only JPG, JPEG, and PNG images are allowed.',
+            'image.max' => 'The image must not exceed 2MB in size.',
+        ]);
+
+        if ($request->has('remove_image') && $request->remove_image) {
+            if ($post->image && Storage::disk('public')->exists('upload/posts/' . $post->image)) {
+                Storage::disk('public')->delete('upload/posts/' . $post->image);
+            }
+            $validated['image'] = null; 
+        }
+        elseif ($request->hasFile('image')) {
+            if ($post->image && Storage::disk('public')->exists('upload/posts/' . $post->image)) {
+                Storage::disk('public')->delete('upload/posts/' . $post->image);
+            }
+            $path = $request->file('image')->store('upload/posts', 'public');
+            $validated['image'] = basename($path);
+        }
+        else {
+            $validated['image'] = $post->image;
+        }
+
+        $post->update($validated);
+
+        return redirect()->route('admin.posts.index')->with('success', 'Post updated successfully!');
+    }
 
     public function destroy(Post $post)
     {

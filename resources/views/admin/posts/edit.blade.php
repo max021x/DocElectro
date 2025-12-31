@@ -65,7 +65,7 @@
                 <div class="border rounded p-3 bg-light">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                            <img src="{{ asset('storage/uploads/posts/' . $post->image) }}" 
+                            <img src="{{ asset('storage/upload/posts/' . $post->image) }}" 
                                  alt="Current image" 
                                  class="img-fluid rounded" 
                                  style="max-height: 80px; max-width: 120px;">

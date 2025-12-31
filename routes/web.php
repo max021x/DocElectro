@@ -40,7 +40,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/posts/store', [AdminPostController::class, 'store'])->name('admin.posts.store');
     Route::get('/posts/{post}/show', [AdminPostController::class, 'show'])->name('admin.posts.show');
     Route::get('/posts/{post}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');
-    Route::post('/posts/{post}/update', [AdminPostController::class, 'update'])->name('admin.posts.update');
+    Route::put('/posts/{post}/update', [AdminPostController::class, 'update'])->name('admin.posts.update');
     Route::delete('/posts/{post}/destroy', [AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
 
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts.index');
