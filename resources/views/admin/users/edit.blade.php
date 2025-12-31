@@ -1,3 +1,5 @@
+@extends('admin.layouts.main')
+@section('content')
 <div class="admin-header">
     <div class="d-flex justify-content-between align-items-center">
         <div>
@@ -10,7 +12,6 @@
     </div>
 </div>
 
-<!-- Error Alert -->
 @if(session('error'))
 <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
     <i class="fas fa-exclamation-circle me-2"></i>
@@ -19,7 +20,6 @@
 </div>
 @endif
 
-<!-- Success Alert -->
 @if(session('success'))
 <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
     <i class="fas fa-check-circle me-2"></i>
@@ -38,9 +38,12 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="name" name="name" 
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" 
                                value="{{ old('name', $user->name) }}"
                                placeholder="Enter full name" required>
+                        @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 
@@ -48,9 +51,12 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" id="email" name="email" 
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" 
                                value="{{ old('email', $user->email) }}"
                                placeholder="name@example.com" required>
+                        @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 
@@ -58,8 +64,11 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="password" class="form-label">New Password</label>
-                        <input type="password" class="form-control" id="password" name="password" 
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" 
                                placeholder="Leave blank to keep current password">
+                        @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                         <small class="text-muted">Leave empty if you don't want to change the password</small>
                     </div>
                 </div>
@@ -77,11 +86,14 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="role" class="form-label">User Role <span class="text-danger">*</span></label>
-                        <select class="form-select" id="role" name="role" required>
+                        <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" required>
                             <option value="">Select a role</option>
                             <option value="admin" {{ old('role', $user->role) === 'admin' ? 'selected' : '' }}>Admin</option>
                             <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>User</option>
                         </select>
+                        @error('role')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 
@@ -107,6 +119,9 @@
                                 </label>
                             </div>
                         </div>
+                        @error('status')
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -155,57 +170,4 @@
         </form>
     </div>
 </div>
-
-<!-- Delete User Section -->
-<div class="card shadow-sm border-danger mt-4">
-    <div class="card-header bg-white border-danger">
-        <h5 class="mb-0 d-flex align-items-center text-danger">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            Danger Zone
-        </h5>
-    </div>
-    <div class="card-body">
-        <p class="text-danger small mb-3">
-            <i class="fas fa-info-circle me-1"></i>
-            Deleting a user is permanent and cannot be undone.
-        </p>
-        <button type="button" class="btn btn-outline-danger w-100" 
-                data-bs-toggle="modal" 
-                data-bs-target="#deleteUserModal">
-            <i class="fas fa-trash me-1"></i> Delete User
-        </button>
-    </div>
-</div>
-
-<!-- Delete User Modal -->
-<div class="modal fade" id="deleteUserModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header border-danger">
-                <h5 class="modal-title text-danger">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
-                    Delete User
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-circle me-2"></i>
-                    <strong>Warning:</strong> This action cannot be undone.
-                </div>
-                <p>Are you sure you want to delete user <strong>{{ $user->name }}</strong>?</p>
-                <p class="text-muted">All user data including their account information will be permanently deleted.</p>
-                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" id="deleteUserForm">
-                    @csrf
-                    @method('DELETE')
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" form="deleteUserForm" class="btn btn-danger">
-                    <i class="fas fa-trash me-1"></i> Delete User Permanently
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+@endsection
