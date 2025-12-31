@@ -21,7 +21,7 @@ class PostController extends Controller
             ->orWhere('content' , 'like' , '%' . request('search') . '%') ;  
         }
 
-        $posts = $query->paginate(6) ;
+        $posts = $query->paginate(12) ;
         return view('posts.index' , compact('posts')) ;  
     }
 

@@ -10,8 +10,15 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(12) ; 
-        return view('posts.index');
+        $query = Post::query();
+
+        if (request()->has('search')) {
+            $query->where('title', 'like', '%' . request('search') . '%')
+                ->orWhere('content', 'like', '%' . request('search') . '%');
+        }
+
+        $posts = $query->paginate(12);
+        return view('admin.posts.index', compact('posts'));
     }
 
     public function show(Post $post)
@@ -40,12 +47,7 @@ class PostController extends Controller
         return view('admin.posts.edit', compact('post'));
     }
 
-    public function update(Request $request) {
+    public function update(Request $request) {}
 
-    }
-
-    public function destroy(Post $post) {
-
-    }
-
+    public function destroy(Post $post) {}
 }
