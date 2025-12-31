@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Symfony\Component\Routing\Route;
 
 class PostController extends Controller
 {
@@ -49,5 +50,12 @@ class PostController extends Controller
 
     public function update(Request $request) {}
 
-    public function destroy(Post $post) {}
+    public function destroy(Request $request, Post $post)
+    {
+        if (!$post) {
+            return redirect()->back()->with('error', 'Post not Found :(');
+        }
+        $post->delete();
+        return redirect()->back()->with('success', 'Post is Deleted :)');
+    }
 }

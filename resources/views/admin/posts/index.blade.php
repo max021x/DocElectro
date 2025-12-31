@@ -62,7 +62,7 @@
                                             <i class="fas fa-pen"></i>
                                         </a>
                                         <!-- Delete Action -->
-                                        <form method="POST" action="{{ route('admin.posts.destroy', $post->id) }}"
+                                        <form class="btn-group" method="POST" action="{{ route('admin.posts.destroy', $post->id) }}"
                                             class="d-inline">
                                             @csrf
                                             @method('DELETE')

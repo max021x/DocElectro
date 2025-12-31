@@ -41,7 +41,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/posts/{post}/show', [AdminPostController::class, 'show'])->name('admin.posts.show');
     Route::get('/posts/{post}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');
     Route::post('/posts/{post}/update', [AdminPostController::class, 'update'])->name('admin.posts.update');
-    Route::post('/posts/{post}/destroy', [AdminPostController::class, 'update'])->name('admin.posts.destroy');
+    Route::delete('/posts/{post}/destroy', [AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
 
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts.index');
 
