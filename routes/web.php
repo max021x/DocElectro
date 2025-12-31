@@ -38,10 +38,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/posts', [AdminPostController::class, 'index'])->name('admin.posts.index');
     Route::get('/posts/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
     Route::post('/posts/store', [AdminPostController::class, 'store'])->name('admin.posts.create');
-    Route::get('/posts/{id}/show', [AdminPostController::class, 'show'])->name('admin.posts.show');
-    Route::get('/posts/{id}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');
-    Route::post('/posts/{id}/update', [AdminPostController::class, 'update'])->name('admin.posts.update');
-    Route::post('/posts/{id}/destroy', [AdminPostController::class, 'update'])->name('admin.posts.destroy');
+    Route::get('/posts/{post}/show', [AdminPostController::class, 'show'])->name('admin.posts.show');
+    Route::get('/posts/{post}/edit', [AdminPostController::class, 'edit'])->name('admin.posts.edit');
+    Route::post('/posts/{post}/update', [AdminPostController::class, 'update'])->name('admin.posts.update');
+    Route::post('/posts/{post}/destroy', [AdminPostController::class, 'update'])->name('admin.posts.destroy');
 
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts.index');
 
