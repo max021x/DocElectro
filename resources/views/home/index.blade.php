@@ -151,7 +151,8 @@
                     <div class="col-lg-6">
                         <div class="text-container">
                             <h2>Contact Us For A Quote</h2>
-                            <form action="/contact" method="POST">
+                            <form action="/contacts" method="POST">
+                                @csrf
                                 <div class="mb-3">
                                     <input name="name" id="name" type="text" class="form-control"
                                         placeholder="Enter name" />

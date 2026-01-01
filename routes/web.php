@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserDashboardController;
 
@@ -21,6 +22,8 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
     // Route::view('/register' , 'auth.register') ;    
 });
+
+Route::post('/contacts', [ContactController::class , 'store'])->name('contacts.store');
 
 Route::get('/posts', [PostController::class , 'index'])->name('posts.index');
 Route::get('/posts/{post}/show', [PostController::class , 'show'])->name('posts.show');
