@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Symfony\Component\Routing\Route;
 use Illuminate\Support\Facades\Storage;
+use League\CommonMark\CommonMarkConverter;
 
 class PostController extends Controller
 {
@@ -35,27 +35,39 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $fides  = $request->validate([
+        $validated = $request->validate([
             'title' => ['required', 'string', 'max:200'],
-            'category' => ['required', 'string',  'max:100'],
-            'content' => ['required', 'string'],
-            'image' => ['required', 'nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
+            'category' => ['required', 'string', 'max:100'],
+            'content' => ['required', 'string'], // This is Markdown content
+            'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ], [
             'image.image' => 'The file must be an image.',
             'image.mimes' => 'Only JPG, JPEG, and PNG images are allowed.',
             'image.max' => 'The image must not exceed 2MB in size.',
         ]);
 
+        // Convert Markdown to HTML using league/commonmark
+        $converter = new CommonMarkConverter();
+        $htmlContent = $converter->convert($validated['content'])->getContent();
+
+        // Handle image upload
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('upload/posts', 'public');
-            $fides['image'] = basename($path);
+            $validated['image'] = basename($path);
         } else {
-            $fides['image'] = null;
+            $validated['image'] = null;
         }
 
-        Post::create([...$fides, 'user_id' => $request->user()->id]);
+        // Store the HTML content in the database
+        Post::create([
+            'title' => $validated['title'],
+            'category' => $validated['category'],
+            'content' => $htmlContent, // Store HTML content
+            'image' => $validated['image'],
+            'user_id' => $request->user()->id,
+        ]);
 
-        return redirect()->route('admin.posts.index')->with('success', 'Post is stored in database :)');
+        return redirect()->route('admin.posts.index')->with('success', 'Post created successfully!');
     }
 
     public function edit(Post $post)
@@ -68,7 +80,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:200'],
             'category' => ['required', 'string', 'max:100'],
-            'content' => ['required', 'string'],
+            'content' => ['required', 'string'], // This is Markdown content
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ], [
             'image.image' => 'The file must be an image.',
@@ -76,42 +88,44 @@ class PostController extends Controller
             'image.max' => 'The image must not exceed 2MB in size.',
         ]);
 
+        // Convert Markdown to HTML using league/commonmark
+        $converter = new CommonMarkConverter();
+        $htmlContent = $converter->convert($validated['content'])->getContent();
+
+        // Handle image upload/removal
         if ($request->has('remove_image') && $request->remove_image) {
             if ($post->image && Storage::disk('public')->exists('upload/posts/' . $post->image)) {
                 Storage::disk('public')->delete('upload/posts/' . $post->image);
             }
-            $validated['image'] = null; 
-        }
-        elseif ($request->hasFile('image')) {
+            $validated['image'] = null;
+        } elseif ($request->hasFile('image')) {
             if ($post->image && Storage::disk('public')->exists('upload/posts/' . $post->image)) {
                 Storage::disk('public')->delete('upload/posts/' . $post->image);
             }
             $path = $request->file('image')->store('upload/posts', 'public');
             $validated['image'] = basename($path);
-        }
-        else {
+        } else {
             $validated['image'] = $post->image;
         }
 
-        $post->update($validated);
+        // Update post with HTML content
+        $post->update([
+            'title' => $validated['title'],
+            'category' => $validated['category'],
+            'content' => $htmlContent, // Store HTML content
+            'image' => $validated['image'],
+        ]);
 
         return redirect()->route('admin.posts.index')->with('success', 'Post updated successfully!');
     }
 
     public function destroy(Post $post)
     {
-
-        $post = Post::find($post->id);
-
-        if (!$post) {
-            return redirect()->back()->with('error', 'Post not Found :(');
-        }
-
         if ($post->image && Storage::disk('public')->exists('upload/posts/' . $post->image)) {
             Storage::disk('public')->delete('upload/posts/' . $post->image);
         }
 
         $post->delete();
-        return redirect()->back()->with('success', 'Post is Deleted :)');
+        return redirect()->back()->with('success', 'Post deleted successfully!');
     }
 }
