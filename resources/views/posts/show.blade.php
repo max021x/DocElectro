@@ -64,7 +64,7 @@
                     <!-- Post Content -->
                     <div class="card-body px-4 px-md-5 py-4 py-md-5">
                         <div class="post-content fs-6 fs-md-5 lh-lg">
-                            {!! nl2br(e($post->content)) !!}
+                            {!! $post->content !!}
                         </div>
                     </div>
 

@@ -43,7 +43,7 @@
             </div>
             <div class="card-body">
                 <div class="lh-lg">
-                    {!! nl2br(e($post->content)) !!}
+                    {!! $post->content !!}
                 </div>
             </div>
         </div>

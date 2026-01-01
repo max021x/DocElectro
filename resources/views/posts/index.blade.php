@@ -65,7 +65,7 @@
                                     <span class="badge bg-primary">{{ $post->category ?? 'Electronics' }}</span>
                                 </div>
                                 <h5 class="card-title">{{ $post->title }}</h5>
-                                <p class="card-text">{{ Str::limit($post->content, 150) }}</p>
+                                <p class="card-text">{{ Str::limit(strip_tags($post->content), 150) }}</p>
                             </div>
                             <div class="card-footer bg-transparent">
                                 <div class="d-flex justify-content-between align-items-center">
