@@ -47,6 +47,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/posts/{post}/destroy', [AdminPostController::class, 'destroy'])->name('admin.posts.destroy');
 
     Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin.contacts.index');
+    Route::get('/contacts/{contact}/show', [AdminContactController::class, 'show'])->name('admin.contacts.show');
+    Route::delete('/contacts/{contact}/destroy', [AdminContactController::class, 'destroy'])->name('admin.contacts.destroy');
 
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');

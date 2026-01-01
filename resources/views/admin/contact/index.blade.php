@@ -1,3 +1,0 @@
-<div>
-    admin contacts
-</div>
