@@ -34,14 +34,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:admin,user',
-            'status' => 'required|boolean',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'in:admin,user'],
+            'status' => ['required', 'in:0,1'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
+        $validated['status'] = (int)$validated['status'];
 
         User::create($validated);
 
@@ -61,11 +62,11 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
-            'role' => 'required|string',
-            'status' => 'required|string',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'in:admin,user'],
+            'status' => ['required', 'in:0,1'],
         ]);
 
         if ($request->filled('password')) {
@@ -74,16 +75,13 @@ class UserController extends Controller
             unset($validated['password']);
         }
 
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
-        $user->role = $validated['role'];
-        $user->status = $validated['status'] == '1' ? 1 : 0;
+        $validated['status'] = (int)$validated['status'];
 
-        $user->save();
+        $user->update($validated);
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
     }
-    
+
     public function destroy(User $user)
     {
         if ($user->id === auth()->id()) {
