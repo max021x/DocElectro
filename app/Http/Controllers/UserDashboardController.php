@@ -14,13 +14,13 @@ class UserDashboardController extends Controller
 
         $user = Auth::user();
 
-        $savedPosts = SavedPost::where('saved_posts.user_id', '=' , $user->id)
+        $savedPosts = SavedPost::where('saved_posts.user_id', '=', $user->id)
             ->join('posts', 'saved_posts.post_id', '=', 'posts.id')
             ->select('posts.*', 'saved_posts.created_at')
             ->orderBy('saved_posts.created_at', 'desc')
             ->get();
 
-        return view('user.dashboard', compact('user' , 'savedPosts'));
+        return view('user.dashboard', compact('user', 'savedPosts'));
     }
 
 
@@ -45,7 +45,18 @@ class UserDashboardController extends Controller
         return redirect()->back()->with("success", "Tutorial has saved see the dashboard");
     }
 
-    public function deletePost (Request $request , Post $post) {
-        
+    public function deletePost(Request $request, Post $post)
+    {
+
+        $user_id = $request->user()->id;
+        $post_id = $post->id;  
+        $savedPost = SavedPost::where('user_id', $user_id)
+            ->where('post_id', $post_id)->delete();
+
+        if ($savedPost) {
+            return redirect()->back()->with("success", "Post removed from saved items");
+        }
+
+        return redirect()->back()->with("error", "Saved post not found");
     }
 }
