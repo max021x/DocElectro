@@ -1,5 +1,6 @@
 @extends('admin.layouts.main')
 @section('content')
+
 <div class="card shadow-sm">
     <div class="card-header bg-light">
         <div class="d-flex justify-content-between align-items-center">
@@ -42,7 +43,7 @@
                 <h6 class="mb-0">Content</h6>
             </div>
             <div class="card-body">
-                <div class="lh-lg">
+                <div class="lh-lg post-content">
                     {!! $post->content !!}
                 </div>
             </div>
@@ -59,7 +60,7 @@
                     </div>
                     <div class="card-body">
                         <p class="mb-2">
-                            {{ $post->created_at }}
+                            {{ $post->created_at->format('F j, Y, g:i a') }}
                         </p>
                         <small class="text-muted">
                             <i class="fas fa-clock me-1"></i>
@@ -127,7 +128,7 @@
                 <i class="fas fa-info-circle me-1"></i>
                 Last updated: 
                 @if($post->updated_at && $post->updated_at != $post->created_at)
-                    {{ $post->updated_at }}
+                    {{ $post->updated_at->format('F j, Y, g:i a') }}
                 @else
                     Not updated yet
                 @endif
@@ -135,4 +136,132 @@
         </div>
     </div>
 </div>
+
+<style>
+.post-content {
+    line-height: 1.6;
+    color: #333;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.post-content h1 {
+    font-size: 2em;
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: 0.3em;
+}
+
+.post-content h2 {
+    font-size: 1.5em;
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: 0.3em;
+}
+
+.post-content h3 {
+    font-size: 1.25em;
+}
+
+.post-content p {
+    margin-bottom: 1em;
+}
+
+.post-content ul,
+.post-content ol {
+    padding-left: 2em;
+    margin-bottom: 1em;
+}
+
+.post-content li {
+    margin-bottom: 0.25em;
+}
+
+.post-content blockquote {
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+    margin: 0 0 1em 0;
+    font-style: italic;
+}
+
+.post-content pre {
+    background-color: #f6f8fa;
+    border-radius: 6px;
+    padding: 16px;
+    overflow: auto;
+    margin-bottom: 1em;
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    font-size: 85%;
+}
+
+.post-content code {
+    background-color: rgba(175, 184, 193, 0.2);
+    border-radius: 6px;
+    padding: 0.2em 0.4em;
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    font-size: 85%;
+}
+
+.post-content pre code {
+    background-color: transparent;
+    padding: 0;
+    font-size: 100%;
+}
+
+.post-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 1em;
+    border: 1px solid #dfe2e5;
+}
+
+.post-content table th,
+.post-content table td {
+    border: 1px solid #dfe2e5;
+    padding: 6px 13px;
+    text-align: left;
+}
+
+.post-content table th {
+    font-weight: 600;
+    background-color: #f6f8fa;
+}
+
+.post-content table tr:nth-child(2n) {
+    background-color: #f6f8fa;
+}
+
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 1em 0;
+}
+
+.post-content a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.post-content a:hover {
+    text-decoration: underline;
+}
+
+.post-content hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e1e4e8;
+    border: 0;
+}
+</style>
 @endsection

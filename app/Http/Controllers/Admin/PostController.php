@@ -25,6 +25,8 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        $converter = new CommonMarkConverter();
+        $post->content = $converter->convert($post->content)->getContent();
         return view('admin.posts.show', compact('post'));
     }
 
@@ -38,7 +40,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:200'],
             'category' => ['required', 'string', 'max:100'],
-            'content' => ['required', 'string'], 
+            'content' => ['required', 'string'],
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ], [
             'image.image' => 'The file must be an image.',
@@ -46,7 +48,7 @@ class PostController extends Controller
             'image.max' => 'The image must not exceed 2MB in size.',
         ]);
 
-   
+
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('upload/posts', 'public');
             $validated['image'] = basename($path);
@@ -101,7 +103,7 @@ class PostController extends Controller
         $post->update([
             'title' => $validated['title'],
             'category' => $validated['category'],
-            'content' => $validated['content'], 
+            'content' => $validated['content'],
             'image' => $validated['image'],
         ]);
 
