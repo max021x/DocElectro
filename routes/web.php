@@ -29,9 +29,17 @@ Route::get('/posts', [PostController::class , 'index'])->name('posts.index');
 Route::get('/posts/{post}/show', [PostController::class , 'show'])->name('posts.show');
 
 Route::middleware(['auth'])->group(function  () {
-    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::post('/comment/{post}/store' , [CommentController::class , 'store'])->name('comments.store') ; 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+    // user dashboard
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/email/update', [UserDashboardController::class, 'updateEmail'])->name('email.update');
+    Route::post('/password/update', [UserDashboardController::class, 'updateEmail'])->name('password.update');
+    Route::delete('/account/delete', [UserDashboardController::class, 'changePassword'])->name('account.delete');
+
+
+
 }) ; 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
