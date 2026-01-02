@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Post;
+use App\Models\SavedPost;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -30,7 +31,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@example.com',
             'password' => Hash::make("user123")
         ]);
-
-        // Post::factory()->count(40)->create() ; 
+        
+        Post::factory()->count(1)->create() ;
+        
+        SavedPost::factory()->create([
+            'post_id' => 1 , 
+            'user_id' => 1 
+        ]) ; 
     }
 }

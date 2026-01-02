@@ -38,7 +38,8 @@ Route::middleware(['auth'])->group(function  () {
     Route::post('/password/update', [UserDashboardController::class, 'updateEmail'])->name('password.update');
     Route::delete('/account/delete', [UserDashboardController::class, 'changePassword'])->name('account.delete');
 
-
+    Route::post('/posts/{post}/save' , [UserDashboardController::class , 'savePost'])->name('posts.save') ; 
+    Route::delete('/posts/{post}/delete' , [UserDashboardController::class , 'deletePost'])->name('posts.saved.delete') ; 
 
 }) ; 
 

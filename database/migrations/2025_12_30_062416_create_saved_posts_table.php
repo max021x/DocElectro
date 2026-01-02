@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('post_id')->constrained()->onDelete('cascade');
-            $table->timestamp('saved_at')->useCurrent();
+            $table->timestamps() ; 
             $table->unique(['user_id', 'post_id']);
         });
     }

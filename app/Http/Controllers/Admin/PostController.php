@@ -59,7 +59,7 @@ class PostController extends Controller
         Post::create([
             'title' => $validated['title'],
             'category' => $validated['category'],
-            'content' => $htmlContent,
+            'content' => $validated['content'],
             'image' => $validated['image'],
             'user_id' => $request->user()->id,
         ]);
