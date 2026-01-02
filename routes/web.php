@@ -33,13 +33,13 @@ Route::middleware(['auth'])->group(function  () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
     // user dashboard
-    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-    Route::post('/email/update', [UserDashboardController::class, 'updateEmail'])->name('email.update');
-    Route::post('/password/update', [UserDashboardController::class, 'updateEmail'])->name('password.update');
-    Route::delete('/account/delete', [UserDashboardController::class, 'changePassword'])->name('account.delete');
-
     Route::post('/posts/{post}/save' , [UserDashboardController::class , 'savePost'])->name('posts.save') ; 
     Route::delete('/posts/{post}/delete' , [UserDashboardController::class , 'deletePost'])->name('posts.saved.delete') ; 
+    
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/email/update', [UserDashboardController::class, 'updateEmail'])->name('email.update');
+    Route::post('/password/update', [UserDashboardController::class, 'updatePassword'])->name('password.update');
+    Route::post('/account/delete', [UserDashboardController::class, 'deleteAccount'])->name('account.delete');
 
 }) ; 
 
