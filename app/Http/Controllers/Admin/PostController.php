@@ -38,7 +38,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:200'],
             'category' => ['required', 'string', 'max:100'],
-            'content' => ['required', 'string'], // This is Markdown content
+            'content' => ['required', 'string'], 
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ], [
             'image.image' => 'The file must be an image.',
@@ -46,11 +46,7 @@ class PostController extends Controller
             'image.max' => 'The image must not exceed 2MB in size.',
         ]);
 
-        // Convert Markdown to HTML using league/commonmark
-        $converter = new CommonMarkConverter();
-        $htmlContent = $converter->convert($validated['content'])->getContent();
-
-        // Handle image upload
+   
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('upload/posts', 'public');
             $validated['image'] = basename($path);
@@ -58,11 +54,10 @@ class PostController extends Controller
             $validated['image'] = null;
         }
 
-        // Store the HTML content in the database
         Post::create([
             'title' => $validated['title'],
             'category' => $validated['category'],
-            'content' => $htmlContent, // Store HTML content
+            'content' => $htmlContent,
             'image' => $validated['image'],
             'user_id' => $request->user()->id,
         ]);
@@ -80,7 +75,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:200'],
             'category' => ['required', 'string', 'max:100'],
-            'content' => ['required', 'string'], // This is Markdown content
+            'content' => ['required', 'string'],
             'image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ], [
             'image.image' => 'The file must be an image.',
@@ -88,11 +83,6 @@ class PostController extends Controller
             'image.max' => 'The image must not exceed 2MB in size.',
         ]);
 
-        // Convert Markdown to HTML using league/commonmark
-        $converter = new CommonMarkConverter();
-        $htmlContent = $converter->convert($validated['content'])->getContent();
-
-        // Handle image upload/removal
         if ($request->has('remove_image') && $request->remove_image) {
             if ($post->image && Storage::disk('public')->exists('upload/posts/' . $post->image)) {
                 Storage::disk('public')->delete('upload/posts/' . $post->image);
@@ -108,11 +98,10 @@ class PostController extends Controller
             $validated['image'] = $post->image;
         }
 
-        // Update post with HTML content
         $post->update([
             'title' => $validated['title'],
             'category' => $validated['category'],
-            'content' => $htmlContent, // Store HTML content
+            'content' => $validated['content'], 
             'image' => $validated['image'],
         ]);
 

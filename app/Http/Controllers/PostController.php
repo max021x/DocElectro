@@ -5,29 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use League\CommonMark\CommonMarkConverter;
 
 class PostController extends Controller
 {
-    public function index () 
+    public function index()
     {
-        $query = Post::query() ; 
+        $query = Post::query();
 
-        if(request()->has('category')){
-            $query->where('category' , request('category')) ; 
+        if (request()->has('category')) {
+            $query->where('category', request('category'));
         }
 
-        if(request()->has('search')) {
-            $query->where('title' , 'like' , '%' . request('search') . '%')
-            ->orWhere('content' , 'like' , '%' . request('search') . '%') ;  
+        if (request()->has('search')) {
+            $query->where('title', 'like', '%' . request('search') . '%')
+                ->orWhere('content', 'like', '%' . request('search') . '%');
         }
 
-        $posts = $query->paginate(12) ;
-        return view('posts.index' , compact('posts')) ;  
+        $posts = $query->paginate(12);
+        return view('posts.index', compact('posts'));
     }
 
-    public function show (Post $post) 
-    {       
-        $comments = Comment::where('post_id' , $post->id)->get() ; 
-        return view('posts.show' , compact('post' , 'comments')) ; 
+    public function show(Post $post)
+    {
+        $comments = Comment::where('post_id', $post->id)->get();
+        $converter = new CommonMarkConverter();
+        $post->content = $converter->convert($post->content)->getContent();
+        return view('posts.show', compact('post', 'comments'));
     }
 }
