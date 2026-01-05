@@ -11,42 +11,51 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserDashboardController;
 
 Route::view('/', 'home.index')->name('home');
 
 
 Route::middleware(['guest'])->group(function () {
-    
+
+    // login
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
-    // Route::view('/register' , 'auth.register') ;    
+    // register
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 });
 
-Route::post('/contacts', [ContactController::class , 'store'])->name('contacts.store');
 
-Route::get('/posts', [PostController::class , 'index'])->name('posts.index');
-Route::get('/posts/{post}/show', [PostController::class , 'show'])->name('posts.show');
+Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/{post}/show', [PostController::class, 'show'])->name('posts.show');
 
-Route::middleware(['auth'])->group(function  () {
-    Route::post('/comment/{post}/store' , [CommentController::class , 'store'])->name('comments.store') ; 
+Route::middleware(['auth'])->group(function () {
+
+    // email
+    Route::get('/email/verify', [RegisterController::class, 'notice'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
+    Route::post('/email/verification-notification', [RegisterController::class, 'resend'])->middleware(['throttle:6,1'])->name('verification.send');
+
+    Route::post('/comment/{post}/store', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    
+
     // user dashboard
-    Route::post('/posts/{post}/save' , [UserDashboardController::class , 'savePost'])->name('posts.save') ; 
-    Route::delete('/posts/{post}/delete' , [UserDashboardController::class , 'deletePost'])->name('posts.saved.delete') ; 
-    
+    Route::post('/posts/{post}/save', [UserDashboardController::class, 'savePost'])->name('posts.save');
+    Route::delete('/posts/{post}/delete', [UserDashboardController::class, 'deletePost'])->name('posts.saved.delete');
+
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::post('/email/update', [UserDashboardController::class, 'updateEmail'])->name('email.update');
     Route::post('/password/update', [UserDashboardController::class, 'updatePassword'])->name('password.update');
     Route::post('/account/delete', [UserDashboardController::class, 'deleteAccount'])->name('account.delete');
-
-}) ; 
+});
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    
+
     Route::get('/posts', [AdminPostController::class, 'index'])->name('admin.posts.index');
     Route::get('/posts/create', [AdminPostController::class, 'create'])->name('admin.posts.create');
     Route::post('/posts/store', [AdminPostController::class, 'store'])->name('admin.posts.store');

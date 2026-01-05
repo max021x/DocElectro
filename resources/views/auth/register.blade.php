@@ -1,26 +1,49 @@
 @extends('layouts.main')
 @section('content')
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="d-flex justify-content-center mt-6 position-relative">
         <img src="images/svg/decoration-star.svg" alt="" class="decoration-star position-absolute start-0 w-50" />
         <div class="card py-5 px-3" style="width: 500px;">
             <div class="card-body">
-                <form>
+                <form action="{{ route('register.store') }}" method="POST">
+                    @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">User name</label>
-                        <input type="name" class="form-control" name="name" id="name">
+                        <input type="name" class="form-control" name="name" id="name"
+                            value="{{ old('name') }}">
+                        <div>
+                            @error('name')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
                         <input type="email" class="form-control" name="email" id="email"
-                            placeholder="name@example.com">
+                            placeholder="name@example.com" value="{{ old('email') }}">
+                        <div>
+                            @error('email')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="password">
+                        <input type="password" class="form-control" name="password" id="password"
+                            value="{{ old('password') }}">
+                        <div>
+                            @error('password')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="password-confirm" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" name="password-confirm" id="password">
+                        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
                     </div>
                     <div class="d-grid">
                         <button class="btn btn-primary btn-lg">Login</button>
