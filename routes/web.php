@@ -38,18 +38,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/email/verify', [RegisterController::class, 'notice'])->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
     Route::post('/email/verification-notification', [RegisterController::class, 'resend'])->middleware(['throttle:6,1'])->name('verification.send');
-
-    Route::post('/comment/{post}/store', [CommentController::class, 'store'])->name('comments.store');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // user dashboard
-    Route::post('/posts/{post}/save', [UserDashboardController::class, 'savePost'])->name('posts.save');
-    Route::delete('/posts/{post}/delete', [UserDashboardController::class, 'deletePost'])->name('posts.saved.delete');
 
-    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-    Route::post('/email/update', [UserDashboardController::class, 'updateEmail'])->name('email.update');
-    Route::post('/password/update', [UserDashboardController::class, 'updatePassword'])->name('password.update');
-    Route::post('/account/delete', [UserDashboardController::class, 'deleteAccount'])->name('account.delete');
+    // user dashboard
+    Route::middleware(['verified'])->group(function () {
+        Route::post('/comment/{post}/store', [CommentController::class, 'store'])->middleware('verified')->name('comments.store');
+        Route::post('/posts/{post}/save', [UserDashboardController::class, 'savePost'])->name('posts.save');
+        Route::delete('/posts/{post}/delete', [UserDashboardController::class, 'deletePost'])->name('posts.saved.delete');
+
+        Route::get('/dashboard', [UserDashboardController::class, 'index'])->middleware('verified')->name('dashboard');
+        Route::post('/email/update', [UserDashboardController::class, 'updateEmail'])->name('email.update');
+        Route::post('/password/update', [UserDashboardController::class, 'updatePassword'])->name('password.update');
+        Route::post('/account/delete', [UserDashboardController::class, 'deleteAccount'])->name('account.delete');
+    });
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
