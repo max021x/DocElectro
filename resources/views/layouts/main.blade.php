@@ -91,7 +91,7 @@
                         </li>
                     @endauth
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-dark" href="#contact">Contact</a>
+                        <a class="nav-link text-dark" href="/#contact">Contact</a>
                     </li>
                     <!-- <li class="nav-item mx-2">
                         <a href="#" class="nav-link text-dark">
