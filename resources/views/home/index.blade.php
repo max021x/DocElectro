@@ -2,21 +2,15 @@
 @section('content')
     <div>
         <!-- Success/Error Alerts -->
-        {{-- <div class="container text-center">
-            <div class="mt-5 alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fas fa-check-circle me-2"></i>
-                <?= htmlspecialchars($success) ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @if (session('status'))
+            <div class="container text-center">
+                <div class="mt-5 alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <?= htmlspecialchars(session('status')) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             </div>
-        </div> --}}
-
-        {{-- <div class="container text-center">
-            <div class="mt-5 alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fas fa-exclamation-circle me-2"></i>
-                <?= htmlspecialchars($error) ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div> --}}
+        @endif
 
         <header class="header">
             <!-- hero -->
@@ -151,7 +145,7 @@
                     <div class="col-lg-6">
                         <div class="text-container">
                             <h2>Contact Us For A Quote</h2>
-                            <form action="/contacts" method="POST">
+                            <form action="{{route('contacts.store')}}" method="POST">
                                 @csrf
                                 <div class="mb-3">
                                     <input name="name" id="name" type="text" class="form-control"
