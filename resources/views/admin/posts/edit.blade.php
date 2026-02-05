@@ -145,10 +145,10 @@
                                     Upload featured image (optional)
                                     @endif
                                 </p>
-                                <button type="button" id="chooseImageBtn" class="btn btn-sm btn-outline-primary">
+                                {{-- <button type="button" id="chooseImageBtn" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-upload"></i> Choose Image
-                                </button>
-                                <input type="file" id="imageFile" name="image" class="d-none" accept="image/*">
+                                </button> --}}
+                                <input type="file" id="" name="image" accept="image/*" value="Chose Image">
                             </div>
                         </div>
                     </div>
@@ -302,8 +302,8 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> --}}
+{{-- <script>
     // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize marked with options
@@ -586,5 +586,5 @@
             window.addEventListener('scroll', toggleGoToTopButton);
         }
     }
-</script>
+</script> --}}
 @endsection

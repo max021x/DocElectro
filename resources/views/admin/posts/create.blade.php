@@ -224,8 +224,8 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> --}}
+{{-- <script>
     // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize marked with options
@@ -467,5 +467,5 @@
             window.addEventListener('scroll', toggleGoToTopButton);
         }
     }
-</script>
+</script> --}}
 @endsection

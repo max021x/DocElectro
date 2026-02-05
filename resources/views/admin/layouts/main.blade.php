@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-    <script src="https://unpkg.com/alpinejs" defer></script>
+    {{-- <script src="https://unpkg.com/alpinejs" defer></script> --}}
 </head>
 
 <body>
@@ -96,9 +96,9 @@
             </footer>
         </div>
     </div>
+    @yield('scripts')
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
-    @yield('scripts')
 </body>
 
 </html>
