@@ -1,16 +1,9 @@
 @extends('layouts.main')
 @section('content')
     <div>
-        <!-- Success/Error Alerts -->
-        @if (session('status'))
-            <div class="container text-center">
-                <div class="mt-5 alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle me-2"></i>
-                    <?= htmlspecialchars(session('status')) ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-        @endif
+
+        {{-- session alert --}}
+        <x-session-alert/>
 
         <header class="header">
             <!-- hero -->

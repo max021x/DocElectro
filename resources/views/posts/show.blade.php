@@ -3,18 +3,10 @@
 
 
     <div class="container py-5">
-        <!-- Error Alert -->
-        @if (session('error'))
-            <div class="row justify-content-center mb-3">
-                <div class="col-12 col-lg-10 col-xl-9">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-circle me-2"></i>
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
-        @endif
+        
+        {{-- session alert --}}
+        <x-session-alert/>
+
 
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-9">

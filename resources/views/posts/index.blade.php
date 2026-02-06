@@ -27,10 +27,13 @@
             </div>
 
             @if (request()->has('category'))
-                <div class="alert alert-info d-flex align-items-center">
-                    <i class="fas fa-filter me-2"></i>
-                    Showing tutorials in category: <strong class="ms-2">{{ request('category') }}</strong>
-                    <a href="{{ route('posts.index') }}" class="btn btn-sm btn-outline-info ms-auto">
+                <div class="alert alert-info d-flex flex-column flex-sm-row align-items-start align-items-sm-center">
+                    <div class="mb-2 mb-sm-0 d-flex align-items-center">
+                        <i class="fas fa-filter me-2"></i>
+                        <span>Showing tutorials in category: <strong
+                                class="ms-1">{{ request('category') }}</strong></span>
+                    </div>
+                    <a href="{{ route('posts.index') }}" class="btn btn-sm btn-outline-info ms-sm-auto">
                         <i class="fas fa-times me-1"></i> Clear Filter
                     </a>
                 </div>
