@@ -20,7 +20,8 @@ class PostController extends Controller
         }
 
         $posts = $query->paginate(12);
-        return view('admin.posts.index', compact('posts'));
+        $active = 'posts' ;
+        return view('admin.posts.index', compact('posts' , 'active'));
     }
 
     public function show(Post $post)
@@ -32,7 +33,8 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('admin.posts.create');
+        $active = 'create' ; 
+        return view('admin.posts.create' , compact('active'));
     }
 
     public function store(Request $request)

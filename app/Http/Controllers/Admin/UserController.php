@@ -23,12 +23,14 @@ class UserController extends Controller
         }
 
         $users = $query->paginate(12);
-        return view('admin.users.index', compact('users'));
+        $active = 'users' ; 
+        return view('admin.users.index', compact('users' , 'active'));
     }
 
     public function create()
-    {
-        return view('admin.users.create');
+    {   
+        $active = 'create_user' ; 
+        return view('admin.users.create' , compact('active'));
     }
 
     public function store(Request $request)

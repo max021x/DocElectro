@@ -18,6 +18,7 @@ class DashboardController extends Controller
         $totalComments = Comment::count();
         $totalContacts = Contact::count() ;  
         $totalUsers = User::count() ;  
-        return view('admin.dashboard.index' ,  compact('totalPosts' , 'totalComments' , 'totalContacts' , 'totalUsers')) ; 
+        $active = 'dashboard' ; 
+        return view('admin.dashboard.index' ,  compact('totalPosts' , 'totalComments' , 'totalContacts' , 'totalUsers' , 'active')) ; 
     }
 }

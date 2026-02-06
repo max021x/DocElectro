@@ -19,8 +19,8 @@ class ContactController extends Controller
         }
 
         $contacts = $query->orderBy('created_at', 'desc')->paginate(15);
-
-        return view('admin.contacts.index', compact('contacts'));
+        $active = 'contacts' ; 
+        return view('admin.contacts.index', compact('contacts' , 'active'));
     }
 
     public function show(Contact $contact)
