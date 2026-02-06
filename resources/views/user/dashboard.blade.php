@@ -1,31 +1,9 @@
 @extends('layouts.main')
 @section('content')
     <div class="container py-6">
-        <!-- Error Alert -->
-        @if (session('error'))
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fas fa-exclamation-circle me-2"></i>
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
-        @endif
-
-        <!-- Success Alert -->
-        @if (session('success'))
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fas fa-check-circle me-2"></i>
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
-        @endif
+        
+      {{-- session alert --}}
+        <x-session-alert/>
 
         <!-- Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
