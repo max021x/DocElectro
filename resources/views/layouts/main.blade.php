@@ -19,7 +19,7 @@
 
             <!-- Brand Logo -->
             <a class="navbar-brand fw-bold fs-4 text-primary d-flex align-items-center" href="{{ route('home') }}">
-                <i class="fas fa-bolt me-2"></i>ElectroDoc
+                <i class="fas fa-bolt me-2"></i>DocElectro
             </a>
 
             <!-- Search Box - Visible on medium and larger screens -->

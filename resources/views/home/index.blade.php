@@ -3,7 +3,7 @@
     <div>
 
         {{-- session alert --}}
-        <x-session-alert/>
+        <x-session-alert />
 
         <header class="header">
             <!-- hero -->
@@ -17,14 +17,11 @@
                         </div>
                         <div class="col-md-6">
                             <div class="text-container p-4 d-flex flex-column justify-content-center h-100 mb-5">
-                                <h1 class="display-3 fw-bold">welcome To Blog Mastery</h1>
+                                <h1 class="display-3 fw-bold">welcome To DocElectro</h1>
                                 <p class="lead">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae non libero, nihil
-                                    consequuntur
-                                    cupiditate repellat optio nobis vero temporibus et quod? Voluptatibus accusamus error,
-                                    iste quisquam ex
-                                    blanditiis a inventore officia. Nesciunt magni in aliquam non saepe repellendus at
-                                    dolorum?
+                                    Master the world of electronics with comprehensive tutorials, circuit analysis, and
+                                    hands-on projects. From basic components to advanced microcontroller programming,
+                                    ElectroDoc provides the knowledge you need to bring your electronic creations to life.
                                 </p>
 
                                 <!-- Form -->
@@ -64,10 +61,9 @@
                             Spaces
                         </h2>
                         <p class="fs-5">
-                            At our company, designing office spaces is our passion. We take
-                            pride in our completed projects that reflect our dedication and
-                            expertise in creating functional and aesthetically pleasing work
-                            environments.
+                            ElectroDoc bridges theory and practice with detailed guides on circuit design, component
+                            selection, and embedded systems development. Our tutorials cover everything from Ohm's Law
+                            fundamentals to advanced IoT implementations with ESP32 and Arduino platforms.
                         </p>
                     </div>
                 </div>
@@ -138,7 +134,7 @@
                     <div class="col-lg-6">
                         <div class="text-container">
                             <h2>Contact Us For A Quote</h2>
-                            <form action="{{route('contacts.store')}}" method="POST">
+                            <form action="{{ route('contacts.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
                                     <input name="name" id="name" type="text" class="form-control"
