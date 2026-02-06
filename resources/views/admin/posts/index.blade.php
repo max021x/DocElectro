@@ -1,5 +1,9 @@
 @extends('admin.layouts.main')
 @section('content')
+
+    {{-- session alert --}}
+    <x-session-alert/>
+
     <div class="admin-header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
