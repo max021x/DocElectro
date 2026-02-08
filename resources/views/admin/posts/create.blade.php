@@ -14,16 +14,7 @@
 
     {{-- session alert --}}
     <x-session-alert />
-
-    <!-- Success Alert -->
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-            <i class="fas fa-check-circle me-2"></i>
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
+    
     <div class="card mt-4">
         <div class="card-body">
             <form id="createPostForm" action="{{ route('admin.posts.store') }}" method="POST"
