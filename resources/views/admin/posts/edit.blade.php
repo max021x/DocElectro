@@ -92,7 +92,7 @@
                                  style="max-height: 80px; max-width: 120px;"
                                  id="currentImage">
                             <div class="ms-3 text-start">
-                                <small class="text-muted d-block">Current featured image</small>
+                                <small class="d-none text-muted d-sm-block">Current featured image</small>
                             </div>
                         </div>
                         <div>

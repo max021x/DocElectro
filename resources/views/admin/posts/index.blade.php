@@ -50,7 +50,7 @@
                             <tr>
                                 <td>{{ $post->id }}</td>
                                 <td>
-                                    <div class="fw-semibold">{{ $post->title }}</div>
+                                    <div class="fw-semibold">{{ Str::limit($post->title , 20) }}</div>
                                 </td>
                                 <td>{{ $post->created_at->format('M d, Y') }}</td>
                                 <td>
