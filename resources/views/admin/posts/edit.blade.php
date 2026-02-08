@@ -93,7 +93,6 @@
                                  id="currentImage">
                             <div class="ms-3 text-start">
                                 <small class="text-muted d-block">Current featured image</small>
-                                <small id="currentFileName">{{ basename($post->image) }}</small>
                             </div>
                         </div>
                         <div>
